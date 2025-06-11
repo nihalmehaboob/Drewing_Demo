@@ -1,7 +1,9 @@
+'use client';
 import React from 'react';
 import Link from 'next/link';
-
+import Excalidraw from './Exclidraw';
 const DrewPage = () => {
+  
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col items-center justify-center px-4">
       <div className="text-center">
@@ -13,6 +15,10 @@ const DrewPage = () => {
             Go to Home
           </button>
         </Link>
+       
+      </div>
+       <div className='h-150 w-200 m-10 mx-30 rounded-s-4xl'>
+        <Excalidraw />
       </div>
     </main>
   );
