@@ -30,8 +30,9 @@ import supabase from '../../lib/supabase';
     } else {
         // Success
         setUsername('');
-        setEmail('');
-        alert("User added successfully!");
+      setEmail('');
+      alert("User added successfully!");
+      
     }
 }
 
