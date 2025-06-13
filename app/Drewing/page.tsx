@@ -3,13 +3,55 @@ import React from 'react';
 import Link from 'next/link';
 import Excalidraw from './Exclidraw';
 import {useState,useRef} from 'react';
+import supabase from '../../lib/supabase';
+
 
 
 const DrewPage = () => {
+  const data={
+  // schema information
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+
+  // elements on canvas
+  "elements": [
+    // example element
+    {
+      "id": "pologsyG-tAraPgiN9xP9b",
+      "type": "rectangle",
+      "x": 928,
+      "y": 319,
+      "width": 134,
+      "height": 90
+      /* ...other element properties */
+    }
+    /* other elements */
+  ],
+
+  // editor state (canvas config, preferences, ...)
+  "appState": {
+    "gridSize": 20,
+    "viewBackgroundColor": "#ffffff"
+  },
+
+  // files data for "image" elements, using format `{ [fileId]: fileData }`
+  "files": {
+    // example of an image data object
+    "3cebd7720911620a3938ce77243696149da03861": {
+      "mimeType": "image/png",
+      "id": "3cebd7720911620a3938c.77243626149da03861",
+      "dataURL": "data:image/png;base64,iVBORWOKGgoAAAANSUhEUgA=",
+      "created": 1690295874454,
+      "lastRetrieved": 1690295874454
+    }
+    /* ...other image data objects */
+  }
+}
 
   const [popopen, Setpopopen] = useState(false);
   const [drawName, SetdrawName] = useState('');
-  const excalidrawRef = useRef(null);
+  const excalidrawRef = useRef(data);
 
   const handlesubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -18,14 +60,42 @@ const DrewPage = () => {
       return;
     }
 
-    console.log(drawName);
+    
     const api = excalidrawRef.current;
     console.log(api)
     if(api){
       // const elements = api.getSceneElements();
       // const appState = api.getAppState();
       // const files = api.getFiles();
+      const elements = api.elements;
+      const appState = api.appState;
+      const files = api.files;
+       const drawingJSON = {
+        type: "excalidraw",
+        version: 2,
+        source: "your-app",
+        elements,
+        appState,
+        files,
+      };
+      const { data, error } = await supabase
+        .from("drawings")
+        .insert([
+          {
+            title: "My First Drawing",
+            user_id: "some-user-id", // if using auth
+            data: drawingJSON,
+          },
+        ]);
+
+         if (error) {
+        console.error("Error saving drawing:", error.message);
+      } else {
+        console.log("Drawing saved:", data);
+      }
     }
+
+    
 
      alert("User added successfully!");
      SetdrawName('');
