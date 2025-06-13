@@ -16,11 +16,18 @@ const DrewPage = () => {
         
        
       </div>
+      <div className='flex mx-10'>  
       <Link href="/">
-          <button className="mt-4 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow transition duration-300">
+        
+              <button className="mt-4 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow transition duration-300">
             Go to Home
           </button>
-        </Link>
+           </Link>
+          <button className="mt-4 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow transition duration-300">
+           Save
+          </button>
+       
+         </div>
        
     </main>
   );
