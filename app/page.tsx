@@ -23,6 +23,15 @@ export default function Home() {
           </button>
         </Link>
       </div>
+      <div className="m-3 p-4 bg-gray-100 w-64 h-96 rounded-3xl flex-col justify-between shadow-lg">
+        <h1 className='text-2xl font-bold text-black mb-5 border-b-2 '> saved Images </h1>
+        <p className='text-black mb-15 font-mono'>With a significant portion of our sales happening through chat, if our core customer support platform isnt accessible, its a crisis.</p>
+         <Link href="/saved_drewings">
+          <button className="mt-4 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow transition duration-300 ml-8">
+           saved Drewings
+          </button>
+        </Link>
+      </div>
       </div>
       </>
     );
