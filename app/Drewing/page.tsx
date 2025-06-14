@@ -1,57 +1,38 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import Excalidraw from './Exclidraw';
-import {useState,useRef} from 'react';
+//import Excalidraw from './Exclidraw';
+import {useState} from 'react';
 import supabase from '../../lib/supabase';
+import {Excalidraw} from  '@excalidraw/excalidraw';
+import "@excalidraw/excalidraw/index.css";
 
 
 
 const DrewPage = () => {
-  const data={
-  // schema information
-  "type": "excalidraw",
-  "version": 2,
-  "source": "https://excalidraw.com",
-
-  // elements on canvas
-  "elements": [
-    // example element
-    {
-      "id": "pologsyG-tAraPgiN9xP9b",
-      "type": "rectangle",
-      "x": 928,
-      "y": 319,
-      "width": 134,
-      "height": 90
-      /* ...other element properties */
-    }
-    /* other elements */
-  ],
-
-  // editor state (canvas config, preferences, ...)
-  "appState": {
-    "gridSize": 20,
-    "viewBackgroundColor": "#ffffff"
-  },
-
-  // files data for "image" elements, using format `{ [fileId]: fileData }`
-  "files": {
-    // example of an image data object
-    "3cebd7720911620a3938ce77243696149da03861": {
-      "mimeType": "image/png",
-      "id": "3cebd7720911620a3938c.77243626149da03861",
-      "dataURL": "data:image/png;base64,iVBORWOKGgoAAAANSUhEUgA=",
-      "created": 1690295874454,
-      "lastRetrieved": 1690295874454
-    }
-    /* ...other image data objects */
-  }
-}
-
+  
   const [popopen, Setpopopen] = useState(false);
   const [drawName, SetdrawName] = useState('');
-  const excalidrawRef = useRef(data);
+  //const excalidrawRef = useRef(null);
+  const [excalidrawAPI, setExcalidrawAPI] = useState(null);
+
+const extractDrawingJSON = (excalidrawAPI:any) => {
+    const elements = excalidrawAPI.getSceneElements();
+    const appState = excalidrawAPI.getAppState();
+    const files = excalidrawAPI.getFiles();
+
+    return {
+      type: "excalidraw",
+      version: 2,
+      source: "your-app",
+      elements,
+      appState,
+      files,
+    };
+
+
+}
+
 
   const handlesubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -60,46 +41,27 @@ const DrewPage = () => {
       return;
     }
 
-    
-    const api = excalidrawRef.current;
-    console.log(api)
-    if(api){
-      // const elements = api.getSceneElements();
-      // const appState = api.getAppState();
-      // const files = api.getFiles();
-      const elements = api.elements;
-      const appState = api.appState;
-      const files = api.files;
-       const drawingJSON = {
-        type: "excalidraw",
-        version: 2,
-        source: "your-app",
-        elements,
-        appState,
-        files,
-      };
-      const { data, error } = await supabase
-        .from("drawings")
-        .insert([
-          {
-            title: "My First Drawing",
-            user_id: "some-user-id", // if using auth
-            data: drawingJSON,
-          },
-        ]);
-
-         if (error) {
-        console.error("Error saving drawing:", error.message);
-      } else {
-        console.log("Drawing saved:", data);
-      }
+    if (!excalidrawAPI) {
+      alert("Excalidraw API is not available");
+      return;
     }
-
     
+    const drawingJSON = extractDrawingJSON(excalidrawAPI);
+    console.log(excalidrawAPI);
 
-     alert("User added successfully!");
-     SetdrawName('');
-    Setpopopen(false);
+    const { error } = await supabase
+        .from('canvas')
+        .insert([{
+          name: drawName.trim(),
+          content:JSON.stringify(drawingJSON) 
+        }])
+
+        if( error) {
+          alert("Error saving drawing: " + error.message);
+        }
+        SetdrawName('');
+        Setpopopen(false);
+        alert("Drawing saved successfully!");
   }
 
   
@@ -109,10 +71,20 @@ const DrewPage = () => {
         <h1 className="text-5xl font-extrabold text-gray-900 dark:text-white mb-6">
           Welcome to the <span className=" text-rose-400">Draw Page</span>
         </h1>
-        <div className='h-150 w-200 m-10 mx-30 rounded-s-4xl'>
-        <Excalidraw />
+        <div className='h-150 w-200 m-10 mx-30 rounded-s-4xl flex'>
+          
+        <Excalidraw 
+            excalidrawAPI={(api) => setExcalidrawAPI(api)}
+            initialData={{
+              appState: {
+                viewBackgroundColor: "#ffffff",
+                currentItemStrokeColor: "#000000",
+                currentItemBackgroundColor: "transparent",
+              }
+            }}
+          />
       </div>
-        
+         
       {popopen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
