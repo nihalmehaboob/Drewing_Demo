@@ -16,12 +16,12 @@ const Savedimages = () => {
     const fetchImages = async () => {
       const { data, error } = await supabase
         .from('canvas')
-        .select();
+        .select('*');
 
       if (error) {
         const errorMessage = "Error fetching images: " + error.message;
         setFetchError(errorMessage);
-        setImages([]);
+        //setImages([]);
         alert(errorMessage);
         return;
       }
@@ -42,20 +42,21 @@ const Savedimages = () => {
         Welcome to the <span className="text-rose-400">Home Page</span>
       </h1>
 
-      {(fetcError || images.length===0) && (<h1 className='h-30 w-64'>No images</h1>)}
+      {(fetcError) && (<h1 className='h-30 w-64'>No images</h1>)}
 
-            {(images && images.length>=1) && images.map((image: Image) => (
+            {(images && images.length>0) && images.map((image: Image) => (
               <div key={image.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
                 <h2 className="text-xl font-semibold mb-2">{image.name}</h2>
                 <p>{image.content}</p>
-              </div>
-            ))}
-            {images.map((image: any) => (
-              <div key={image.id} className="bg-white dark:bg-yellow rounded-lg shadow-md p-4">
                 <h2 className="text-xl font-semibold mb-2">{image.name}</h2>
                 <p>{image.content}</p>
               </div>
             ))}
+            {/* {images.map((image: Image) => (
+              <div key={image.id} className="bg-white dark:bg-yellow rounded-lg shadow-md p-4">
+                
+              </div>
+            ))} */}
           </div>
         )}
   
