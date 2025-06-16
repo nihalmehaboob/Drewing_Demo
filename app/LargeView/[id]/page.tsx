@@ -22,9 +22,10 @@ const LargeView = () => {
     return <div className="text-red-500 text-xl">Error parsing image data.</div>;
   }
 
-  //const data = JSON.parse(image.content); // Assuming content is stored as a stringified drawing
+  const data = JSON.parse(image.content); // Assuming content is stored as a stringified drawing
 
-  console.log(image.content);
+  // console.log(typeof data);
+  // console.log(data);
 
 
   return (
@@ -33,10 +34,22 @@ const LargeView = () => {
         The Image: <span className="text-rose-400">{image.name}</span>
       </h1>
 
-     <div className="flex justify-center items-center h-100 w-100">
+     <div className="flex justify-center items-center h-200 w-200">
        <Excalidraw 
-         initialData={image.content}
-       viewModeEnabled={true} 
+         initialData={
+          {
+            
+            elements: data.elements,
+            appState:  { zenModeEnabled: true, viewBackgroundColor: "#ffffff" },
+            files: data.files,
+            // files: image.content.files,
+            
+          }
+         }
+       viewModeEnabled={false} 
+       onChange={() => {
+        console.log('Drawing changed');
+       }}
        />
      </div>
      <Link href="/saved_drewings">

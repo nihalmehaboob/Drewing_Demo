@@ -29,7 +29,7 @@ const Savedimages = () => {
       }
 
       if (data) {
-        console.log(data);
+        // console.log(data);
         setImages(data); // FIX: assign data instead of images
         setFetchError('');
       }
