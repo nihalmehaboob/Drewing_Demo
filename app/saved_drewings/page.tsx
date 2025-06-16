@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import supabase from '../../lib/supabase';
+import { TrashIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 
 interface Image {
   id: number;
@@ -37,21 +38,31 @@ const Savedimages = () => {
   }, []);
 
   return (
-    <div>
+    <div className='dark:bg-color-gray-900 '>
       <h1 className="text-5xl font-extrabold text-gray-900 dark:text-white mb-6">
-        Welcome to the <span className="text-rose-400">Home Page</span>
+        Welcome to the <span className="text-rose-400">Saved Classes</span>
       </h1>
 
       {(fetcError) && (<h1 className='h-30 w-64'>No images</h1>)}
+      
+          <div className='flex '> {(images && images.length>0) && images.map((image: Image) => (
+              <div key={image.id} className="bg-white rounded-lg shadow-md p-4 mx-3 w-65 h-65 justify-end flex-col">
+                <h2 className="text-xl text-black mb-2 font-black">{image.name}</h2>
 
-            {(images && images.length>0) && images.map((image: Image) => (
-              <div key={image.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
-                <h2 className="text-xl font-semibold mb-2">{image.name}</h2>
-                <p>{image.content}</p>
-                <h2 className="text-xl font-semibold mb-2">{image.name}</h2>
-                <p>{image.content}</p>
+                <div className='flex '>
+                   <button className="text-red-600 hover:text-red-800 mx-2 ">
+               <TrashIcon className="h-6 w-6" />
+                </button>
+                  <button className="text-red-600 hover:text-red-800">
+                    <ArrowTopRightOnSquareIcon className="h-6 w-6" />
+                  </button>
+                  
+                </div>
+                
               </div>
-            ))}
+              
+            
+            ))}</div> 
             {/* {images.map((image: Image) => (
               <div key={image.id} className="bg-white dark:bg-yellow rounded-lg shadow-md p-4">
                 
