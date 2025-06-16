@@ -22,9 +22,9 @@ const extractDrawingJSON = (excalidrawAPI:any) => {
     const files = excalidrawAPI.getFiles();
 
     return {
-      type: "excalidraw",
-      version: 2,
-      source: "your-app",
+      // type: "excalidraw",
+      // version: 2,
+      // source: "your-app",
       elements,
       appState,
       files,
