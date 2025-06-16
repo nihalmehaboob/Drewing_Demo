@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import supabase from '../../lib/supabase';
 import { TrashIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
+import Link from 'next/link';
 
 interface Image {
   id: number;
@@ -54,7 +55,9 @@ const Savedimages = () => {
                <TrashIcon className="h-6 w-6" />
                 </button>
                   <button className="text-red-600 hover:text-red-800">
+                  <Link href={{pathname :`/LargeView/${image.id}` ,  query:{image:JSON.stringify(image) } } }  >
                     <ArrowTopRightOnSquareIcon className="h-6 w-6" />
+                  </Link>
                   </button>
                   
                 </div>
@@ -63,11 +66,13 @@ const Savedimages = () => {
               
             
             ))}</div> 
-            {/* {images.map((image: Image) => (
-              <div key={image.id} className="bg-white dark:bg-yellow rounded-lg shadow-md p-4">
-                
-              </div>
-            ))} */}
+           
+            <Link href="/">
+        
+          <button className="mt-4 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow transition duration-300">
+            Go to Home
+          </button>
+           </Link>
           </div>
         )}
   
