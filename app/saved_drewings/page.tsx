@@ -46,7 +46,7 @@ const Savedimages = () => {
 
       {(fetcError) && (<h1 className='h-30 w-64'>No images</h1>)}
       
-          <div className='flex '> {(images && images.length>0) && images.map((image: Image) => (
+          <div className='flex h-screen'> {(images && images.length>0) && images.map((image: Image) => (
               <div key={image.id} className="bg-white rounded-lg shadow-md p-4 mx-3 w-65 h-65 justify-end flex-col">
                 <h2 className="text-xl text-black mb-2 font-black">{image.name}</h2>
 

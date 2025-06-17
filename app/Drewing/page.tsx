@@ -47,13 +47,13 @@ const extractDrawingJSON = (excalidrawAPI:any) => {
     }
     
     const drawingJSON = extractDrawingJSON(excalidrawAPI);
-    console.log(excalidrawAPI);
+    //console.log(excalidrawAPI);
 
     const { error } = await supabase
         .from('canvas')
         .insert([{
           name: drawName.trim(),
-          content:JSON.stringify(drawingJSON) 
+          content:drawingJSON
         }])
 
         if( error) {
