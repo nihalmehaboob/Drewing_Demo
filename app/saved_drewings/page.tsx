@@ -41,7 +41,7 @@ const Savedimages = () => {
   return (
     <div className='dark:bg-color-gray-900 '>
       <h1 className="text-5xl font-extrabold text-gray-900 dark:text-white mb-6">
-        Welcome to the <span className="text-rose-400">Saved Classes</span>
+        Welcome to the <span className="text-rose-400">Saved Images</span>
       </h1>
 
       {(fetcError) && (<h1 className='h-30 w-64'>No images</h1>)}
@@ -69,7 +69,7 @@ const Savedimages = () => {
            
             <Link href="/">
         
-          <button className="mt-4 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow transition duration-300">
+          <button className="mt-4 ml-160 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow transition duration-300 justify-center flex">
             Go to Home
           </button>
            </Link>

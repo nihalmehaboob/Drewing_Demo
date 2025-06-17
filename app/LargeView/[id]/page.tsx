@@ -41,7 +41,7 @@ const LargeView = () => {
   let image;
   try {
     image = JSON.parse(imageJSON);
-    console.log( image);
+   // console.log( image);
   } catch (err) {
     console.error('Failed to parse image JSON', err);
     return <div className="text-red-500 text-xl">Error parsing image data.</div>;
@@ -95,19 +95,22 @@ const LargeView = () => {
          }
        viewModeEnabled={false} 
        onChange={() => {
-        console.log('Drawing changed');
+       // console.log('Drawing changed');
        }}
        />
      </div>
+      <div className="flex justify-center items-center ">
      <Link href="/saved_drewings">
-        
-          <button className="mt-4 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow transition duration-300">
+       
+          <button className="mt-4 px-6 py-3 mr-2.5 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow transition duration-300">
             Go to List  
           </button>
            </Link>
        <button className="mt-4 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow transition duration-300" onClick={handlesave}>
-        Save chnages
-        </button>    
+        Save changes
+        </button>   
+</div>
+
     </div>
   );
 };
